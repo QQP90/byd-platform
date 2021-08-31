@@ -1,0 +1,41 @@
+stages: # 流程
+  - install
+  - build
+  - deploy
+
+
+cache: # 缓存
+  paths:
+    - node_modules
+    - dist
+
+
+install-job:
+  tags:
+    - dev
+  only:
+    - dev
+  stage: install
+  script:
+    - npm install
+
+
+build-job:
+  tags:
+    - dev
+  only:
+    - dev
+  stage: build
+  script:
+    - npm run build:dev
+
+  
+deploy-job:
+  tags:
+    - dev
+  only:
+    - dev
+  stage: deploy
+  script:
+    - rm -rf /root/dist
+    - scp -r ./dist /root/
